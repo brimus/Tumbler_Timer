@@ -14,10 +14,10 @@ RTC_clock rtc_clock(XTAL);
 #define WHITE 0x7
 #define OFF   0x0
 
-int endTime1;
-int endTime2;
-int endTime3;
-int endTime4;
+int endTime1 = 0;
+int endTime2 = 0;
+int endTime3 = 0;
+int endTime4 = 0;
 
 const int relay1 = 8;
 const int relay2 = 9;
@@ -68,31 +68,47 @@ void loop(void)
       if (buttons & BUTTON_UP) {
         lcd.display();
         lcd.setBacklight(WHITE);
-        endTime1 = rtc_clock.unixtime() + 1200;
-        digitalWrite(relay1, LOW);
+        if (endTime1 != 0) {
+          timer1();
+        } else {
+          endTime1 = rtc_clock.unixtime() + 1200;
+          digitalWrite(relay1, LOW);
+        }
       }
       if (buttons & BUTTON_DOWN) {
         lcd.display();
         lcd.setBacklight(WHITE);
-        endTime2 = rtc_clock.unixtime() + 15;
-        digitalWrite(relay2, LOW);
+        if (endTime2 != 0) {
+          timer2();
+        } else {
+          endTime2 = rtc_clock.unixtime() + 15;
+          digitalWrite(relay2, LOW);
+        }
       }
       if (buttons & BUTTON_LEFT) {
         lcd.display();
         lcd.setBacklight(WHITE);
-        endTime3 = rtc_clock.unixtime() + 14400;
-        digitalWrite(relay3, LOW);
+        if (endTime3 != 0) {
+          timer3();
+        } else {
+          endTime3 = rtc_clock.unixtime() + 14400;
+          digitalWrite(relay3, LOW);
+        }
       }
       if (buttons & BUTTON_RIGHT) {
         lcd.display();
         lcd.setBacklight(WHITE);
-        endTime4 = rtc_clock.unixtime() + 30;
-        digitalWrite(relay4, LOW);
+        if (endTime4 != 0) {
+          timer4();
+        } else {
+          endTime4 = rtc_clock.unixtime() + 30;
+          digitalWrite(relay4, LOW);
       }
       if (buttons & BUTTON_SELECT) {
         lcd.noDisplay();
         lcd.setBacklight(OFF);
       }
+    }
   }
   lcd.setCursor(0,0);
   lcd.print("             ");
